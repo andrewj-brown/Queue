@@ -26,7 +26,8 @@ export const uqAuthMiddleware = async (
         if (user.email === redacted) {
             user.email = kvd.email || redacted;
         }
-        if (user.name === redacted) {
+        // Update the name if it's changed - preferred names can change once every 24hrs
+        if (user.name === redacted || user.name !== kvd.name) {
             user.name = kvd.name || redacted;
         }
         await user.save();
